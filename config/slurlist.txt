@@ -1,13 +1,23 @@
 ##############################################################
-#List of slurs, please don't murder me for adding this list. #
-#Much like the IC filter, this converts all the words without#
-#A "#" symbol into a list for the PC smite. This can probably#
-#Be used for another filter, but for now it's just for the   #
-#Smite. Conversion is handled in slurhandling.dm             #
-#  -Orchid												     #
+#This list handles the slur filter for the PC smite.         #
+#Unlike the IC filter, this takes the beginning and end of   #
+#slurs and looks for the combinations in messages.           #
+#------------------------------------------------------------#
+#To escape a line, put a "#" in front of it so it's not added#
+#------------------------------------------------------------#
+#For LGBT slurs, put "lgbt" in front for starts and "LGBT"   #
+#for endings. simple as that.                                #
+#------------------------------------------------------------#
+#for racial slurs, put "r" for starts and "R" for ends.      #
+#------------------------------------------------------------#
+#This is converted in randomverbs.dm at the end of the file. #
+#The reason we do it this way is so Github doesn't smite the #
+#repo for having slurs in it. Plus, it makes the filter more #
+#effective when finding words.                               #
+#		-Orchid                                              #
 ##############################################################
-#lord forgive me
-milf
-stinky
-poopy face
-nerd
+#example:
+#lgbt:n
+#LGBT:erd
+#r:l
+#R:mao

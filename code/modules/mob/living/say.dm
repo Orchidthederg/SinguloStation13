@@ -81,6 +81,8 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	new_msg = jointext(new_words," ")
 
 	return new_msg
+/mob/living
+	var/message2 = null
 
 /mob/living/say(message, bubble_type,list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
 	var/ic_blocked = FALSE
@@ -216,6 +218,13 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 		to_chat(src, compose_message(src, language, message, , spans, message_mods))
 
 	return 1
+
+/mob/living/say(message, bubble_type,list/spans = list(), sanitize = FALSE, datum/language/language = null, ignore_spam = TRUE, forced = null)
+	if(!message)
+		return
+	else
+		message2 = message
+		return
 
 /mob/living/Hear(message, atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, list/message_mods = list())
 	SEND_SIGNAL(src, COMSIG_MOVABLE_HEAR, args)
@@ -401,3 +410,36 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 		return mind.get_language_holder()
 	. = ..()
 
+/mob/living
+	var/mob/living/toxiccount = 0
+
+/mob/living/proc/slurfilter()
+	if(!src.client.badman)
+		return
+	if(findtext(src.message2, GLOB.slurfilter_lgbtregex)|findtext(src.message2, GLOB.slurfilter_raceregex))
+		to_chat(src,"<span class='userdanger'>You feel toxic!</span>")
+		src.toxiccount ++
+		if(src.toxiccount == 0) //how
+			return
+		if(src.toxiccount == 1)
+			adjustToxLoss(10,TRUE,TRUE)
+			to_chat(src,"<span class='userdanger'>You feel like you're toxic...</span>")
+			return
+		if(src.toxiccount == 2) //up the ante
+			adjustToxLoss(20,TRUE,TRUE)
+			adjustFireLoss(20,TRUE,TRUE)
+			to_chat(src,"<span class='userdanger'>You feel like you've been really toxic!</span>")
+			return
+		if(src.toxiccount == 3) //up the ante again, hurts people with OP healz
+			adjustFireLoss(25,TRUE,TRUE)
+			adjustToxLoss(25,TRUE,TRUE)
+			adjustBruteLoss(25,TRUE,TRUE)
+			adjustCloneLoss(25,TRUE,TRUE)
+			to_chat(src,"<span class='userdanger'>You feel like you've been way too toxic!</span>")
+			return
+		if(src.toxiccount >= 3) //if you haven't learned by now, that's on you.
+			AdjustStun(100)
+			to_chat(src,"<span class='userdanger'>You feel like you've been incredibly toxic!</span>")
+			sleep(10)
+			gib(src) //survive this, nerd
+			return
