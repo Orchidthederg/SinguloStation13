@@ -3,8 +3,6 @@ GLOBAL_LIST_EMPTY(ghost_images_simple) //this is a list of all ghost images as t
 
 GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 
-GLOBAL_VAR_INIT(respawn_cooldown_number, CONFIG_GET(number/respawncooldown))
-
 /mob/dead/observer
 	name = "ghost"
 	desc = "It's a g-g-g-g-ghooooost!" //jinkies!
@@ -154,6 +152,7 @@ GLOBAL_VAR_INIT(respawn_cooldown_number, CONFIG_GET(number/respawncooldown))
 	grant_all_languages()
 	show_data_huds()
 	data_huds_on = 1
+	COOLDOWN_START(src, respawn_cooldown_timer, respawn_cooldown_count)
 
 
 /mob/dead/observer/get_photo_description(obj/item/camera/camera)
@@ -174,8 +173,9 @@ GLOBAL_VAR_INIT(respawn_cooldown_number, CONFIG_GET(number/respawncooldown))
 
 /mob/
 	COOLDOWN_DECLARE(respawn_cooldown_timer) //respawn stuff, don't mind me!
+	var/respawn_cooldown_count = 90 MINUTES
 
-/mob/dead/verb/abandon_mob()
+/mob/dead/observer/verb/abandon_mob()
 	set name = "Respawn"
 	set category = "OOC"
 
