@@ -1051,6 +1051,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 
 	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Toggled Hub Visibility", "[GLOB.hub_visibility ? "Enabled" : "Disabled"]")) //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
+
 /client/proc/smite(mob/living/target as mob)
 	set name = "Smite"
 	set category = "Fun"
@@ -1130,22 +1131,34 @@ Traitors and the like can also be revived with the previous role mostly intact.
 
 			//Sorry for shitcode and... a *lot* of comments...
 		if(ADMIN_PUNISHMENT_TRANS) //This is mostly a joke smite, but feel free to use it. (Made by Orchid)
-			badman = null
+			slur2list(target)
+			COOLDOWN_DECLARE(genderswitch) //declares the loop cooldown
 			if(!iscarbon(target))
 				to_chat(usr,"span class='warning'>Only carbon mobs can have their privilege checked.</span>") //probably shouldn't turn anything else into a moff
 				return
+
 			if(!is_species(/datum/species/human)) //it'd be a bit ironic if we tried turning a moth into a moth
-				return
+				COOLDOWN_START(target, genderswitch, 15 SECONDS)
+				if(COOLDOWN_FINISHED(target, genderswitch))
+					var/mob/living/carbon/genderresultalt = pick(MALE, FEMALE, NEUTER)
+					target.gender = genderresultalt
+					COOLDOWN_RESET(target, genderswitch)
+					to_chat(target, "<span class='warning'>You feel different...</span>")
+					return
+
 			to_chat(target, "<span class='userdanger'>You feel like you've had your privilege checked!</span>") //HEY LESLIE SHUT YOUR FUCKIN MOUTH
 			target.set_species(/datum/species/moth)
-			target.client.badman = TRUE
-			slurlistmaker(target)
-			while(target.client.badman)
-				var/mob/living/carbon/genderresultalt = pick(MALE, FEMALE, NEUTER)
-				target.gender = genderresultalt
-				to_chat(target, "<span class='warning'>You feel different...</span>")
-				sleep(30 SECONDS)
-				continue
+			COOLDOWN_START(target, genderswitch, 30 SECONDS) //and the nightmare begins
+			if(COOLDOWN_FINISHED(target, genderswitch))
+				var/mob/living/carbon/genderresult = pick(MALE, FEMALE, NEUTER)
+				target.gender = genderresult
+				COOLDOWN_RESET(target, genderswitch) //sets the cooldown to 0
+				to_chat(target,"<span class='warning'> You feel different...</span>")
+
+			if(say(findtext(message, bad_word_list)))
+				return
+			if(say(findtext(message, bad_word_list)))
+				to_chat(target,"<span class='userdanger'>You feel like you've been really toxic!</span>")
 
 		if(ADMIN_PUNISHMENT_NYA)//WaspStation Start - Admin Punishment: Cat Tongue
 			if(!iscarbon(target))
@@ -1157,8 +1170,6 @@ Traitors and the like can also be revived with the previous role mostly intact.
 			tonje.Insert(dude, TRUE, FALSE)//WaspStation End - Admin Punishment: Cat Tongue
 
 	punish_log(target, punishment)
-/client
-	var/badman = null
 
 /client/proc/punish_log(whom, punishment)
 	var/msg = "[key_name_admin(usr)] punished [key_name_admin(whom)] with [punishment]."
@@ -1279,42 +1290,14 @@ Traitors and the like can also be revived with the previous role mostly intact.
 						return
 			REMOVE_TRAIT(D,chosen_trait,source)
 
-GLOBAL_LIST(lgbtslurlist_1)
-GLOBAL_LIST(lgbtslurlist_2)
-GLOBAL_LIST(racialslurlist_1)
-GLOBAL_LIST(racialslurlist_2)
-GLOBAL_LIST(slurfilter_lgbtregex)
-GLOBAL_LIST(slurfilter_raceregex)
-//Sorry in advance for the amateur code
-/client/proc/slurlistmaker()
-	src.smite(src)
-	if(!src.badman)
+/client/proc/slur2list()
+	var/list/bad_word_list = list()
+	if(!fexists("[directory]/slurlist.txt"))
 		return
-	if(!fexists("config/slurlist.txt"))
+	for(var/line in world.file2list("[directory]/slurlist.txt"))
+		if(!line)
+			continue
+		if(findtextEx(line,"#",1,2))
+			continue
+		bad_word_list += REGEX_QUOTE(line)
 		return
-	var/mob/living/living_mob = src.mob
-	if(istype(src.mob, /mob/living))
-		if(!istype(living_mob))
-			return
-		for(var/line in world.file2list("config/slurlist.txt"))
-			if(!line)
-				continue
-			if(findtextEx(line,"#",1,2))
-				continue
-			if(findtextEx(line,"lgbt:",1,6))
-				GLOB.lgbtslurlist_1 |= REGEX_QUOTE(line)
-				return
-			else if(findtextEx(line,"LGBT:",1,6))
-				GLOB.lgbtslurlist_2 |= REGEX_QUOTE(line)
-				return
-			else if(findtextEx(line,"r:",1,3))
-				GLOB.racialslurlist_1 |= REGEX_QUOTE(line)
-				return
-			else if(findtextEx(line,"R:",1,3))
-				GLOB.racialslurlist_2 |= REGEX_QUOTE(line)
-				return
-			GLOB.slurfilter_lgbtregex |= GLOB.lgbtslurlist_1
-			GLOB.slurfilter_lgbtregex |= GLOB.lgbtslurlist_2
-			GLOB.slurfilter_raceregex |= GLOB.racialslurlist_1
-			GLOB.slurfilter_raceregex |= GLOB.racialslurlist_2
-			living_mob.slurfilter(src)
