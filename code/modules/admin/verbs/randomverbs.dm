@@ -1051,7 +1051,6 @@ Traitors and the like can also be revived with the previous role mostly intact.
 
 	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Toggled Hub Visibility", "[GLOB.hub_visibility ? "Enabled" : "Disabled"]")) //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-
 /client/proc/smite(mob/living/target as mob)
 	set name = "Smite"
 	set category = "Fun"
@@ -1128,38 +1127,6 @@ Traitors and the like can also be revived with the previous role mostly intact.
 				return
 		if(ADMIN_PUNISHMENT_IMMERSE)
 			immerse_player(target)
-
-			//Sorry for shitcode and... a *lot* of comments...
-		if(ADMIN_PUNISHMENT_TRANS) //This is mostly a joke smite, but feel free to use it. (Made by Orchid)
-			slur2list(target)
-			COOLDOWN_DECLARE(genderswitch) //declares the loop cooldown
-			if(!iscarbon(target))
-				to_chat(usr,"span class='warning'>Only carbon mobs can have their privilege checked.</span>") //probably shouldn't turn anything else into a moff
-				return
-
-			if(!is_species(/datum/species/human)) //it'd be a bit ironic if we tried turning a moth into a moth
-				COOLDOWN_START(target, genderswitch, 15 SECONDS)
-				if(COOLDOWN_FINISHED(target, genderswitch))
-					var/mob/living/carbon/genderresultalt = pick(MALE, FEMALE, NEUTER)
-					target.gender = genderresultalt
-					COOLDOWN_RESET(target, genderswitch)
-					to_chat(target, "<span class='warning'>You feel different...</span>")
-					return
-
-			to_chat(target, "<span class='userdanger'>You feel like you've had your privilege checked!</span>") //HEY LESLIE SHUT YOUR FUCKIN MOUTH
-			target.set_species(/datum/species/moth)
-			COOLDOWN_START(target, genderswitch, 30 SECONDS) //and the nightmare begins
-			if(COOLDOWN_FINISHED(target, genderswitch))
-				var/mob/living/carbon/genderresult = pick(MALE, FEMALE, NEUTER)
-				target.gender = genderresult
-				COOLDOWN_RESET(target, genderswitch) //sets the cooldown to 0
-				to_chat(target,"<span class='warning'> You feel different...</span>")
-
-			if(say(findtext(message, bad_word_list)))
-				return
-			if(say(findtext(message, bad_word_list)))
-				to_chat(target,"<span class='userdanger'>You feel like you've been really toxic!</span>")
-
 		if(ADMIN_PUNISHMENT_NYA)//WaspStation Start - Admin Punishment: Cat Tongue
 			if(!iscarbon(target))
 				to_chat(usr,"<span class='warning'>This must be used on a carbon mob.</span>")
@@ -1289,15 +1256,3 @@ Traitors and the like can also be revived with the previous role mostly intact.
 					if(!source)
 						return
 			REMOVE_TRAIT(D,chosen_trait,source)
-
-/client/proc/slur2list()
-	var/list/bad_word_list = list()
-	if(!fexists("[directory]/slurlist.txt"))
-		return
-	for(var/line in world.file2list("[directory]/slurlist.txt"))
-		if(!line)
-			continue
-		if(findtextEx(line,"#",1,2))
-			continue
-		bad_word_list += REGEX_QUOTE(line)
-		return

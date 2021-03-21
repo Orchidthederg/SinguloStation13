@@ -400,4 +400,3 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	if(get_minds && mind)
 		return mind.get_language_holder()
 	. = ..()
-
