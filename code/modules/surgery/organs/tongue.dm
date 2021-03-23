@@ -56,6 +56,14 @@
 	taste_sensitivity = 10 // combined nose + tongue, extra sensitive
 	modifies_speech = TRUE
 
+/obj/item/organ/tongue/lizard/kobold
+	name = "small forked tongue"
+	desc = "A forked tongue that seems fairly small, likely from a Kobold."
+	icon_state = "tonguelizard"
+	say_mod = pick("yips", "yaps", "hisses")
+	taste_sensitivity = 8 // hungry
+	modifies_speech = FALSE
+
 /obj/item/organ/tongue/lizard/handle_speech(datum/source, list/speech_args)
 	if(speech_args[SPEECH_LANGUAGE] == /datum/language/draconic) //Wasp edit - lizard tongues don't hiss when speaking Draconic
 		return

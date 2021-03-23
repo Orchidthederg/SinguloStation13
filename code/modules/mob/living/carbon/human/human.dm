@@ -1311,6 +1311,9 @@
 /mob/living/carbon/human/species/lizard
 	race = /datum/species/lizard
 
+/mob/living/carbon/human/species/lizard/kobold
+	race = /datum/species/lizard/kobold
+
 /mob/living/carbon/human/species/ethereal
 	race = /datum/species/ethereal
 

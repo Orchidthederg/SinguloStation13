@@ -239,6 +239,7 @@
 		/obj/item/organ/tongue/fly,
 		/obj/item/organ/tongue/snail,
 		/obj/item/organ/tongue/lizard,
+		/obj/item/organ/tongue/lizard/kobold,
 		/obj/item/organ/tongue/alien,
 		/obj/item/organ/tongue/ethereal,
 		/obj/item/organ/tongue/robot,
