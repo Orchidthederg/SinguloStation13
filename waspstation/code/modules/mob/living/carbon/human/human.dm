@@ -78,6 +78,4 @@
 /mob/living/carbon/human/species/squid
 	race = /datum/species/squid
 
-/mob/living/carbon/human/species/lizard/ashwalker/kobold
-	race = /datum/species/lizard/ashwalker/kobold
-	
+
