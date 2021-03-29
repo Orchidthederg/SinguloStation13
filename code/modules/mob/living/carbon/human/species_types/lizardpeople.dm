@@ -84,32 +84,21 @@
 	name = "Kobold"
 	id = "kobold"
 	default_color = "b31e00"
-	species_traits = list(MUTCOLORS,EYECOLOR,LIPS)
-	inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID|MOB_REPTILE
-	mutanttongue = /obj/item/organ/tongue/lizard
-	mutant_organs = list(/obj/item/organ/tail/lizard)
-	coldmod = 1.5
+	limbs_id = "kobold"
+	species_traits = list(MUTCOLORS,EYECOLOR,LIPS,DIGITIGRADE)
+	mutanttongue = /obj/item/organ/tongue/lizard/kobold
+	mutant_organs = list(/obj/item/organ/tail/lizard, /obj/item/organ/lungs/kobold)
 	heatmod = 0.5
-	default_features = list("mcolor" = "0F0", "tail_lizard" = "Smooth", "snout" = "Round", "horns" = "None", "frills" = "None", "spines" = "None", "body_markings" = "None", "legs" = "Normal Legs")
-	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
-	attack_verb = "slash"
-	attack_sound = 'sound/weapons/slash.ogg'
-	miss_sound = 'sound/weapons/slashmiss.ogg'
-	meat = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/lizard
-	skinned_type = /obj/item/stack/sheet/animalhide/lizard
-	exotic_bloodtype = "L"
-	disliked_food = GRAIN | DAIRY
-	liked_food = GROSS | MEAT
+	default_features = list("mcolor" = "0F0", "tail_lizard" = "Smooth", "snout" = "Round", "horns" = "None", "frills" = "None", "spines" = "None", "body_markings" = "None", "legs" = "Digitigrade legs")
+	meat = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/lizard/kobold
+	skinned_type = /obj/item/stack/sheet/animalhide/lizard/kobold
 	inert_mutation = FIREBREATH
 	deathsound = 'sound/voice/lizard/deathsound2.ogg'
-	wings_icon = "Dragon"
-	species_language_holder = /datum/language_holder/lizard
-	// Lizards are coldblooded and can stand a greater temperature range than humans
-	bodytemp_heat_damage_limit = (BODYTEMP_HEAT_DAMAGE_LIMIT + 20) // This puts lizards 10 above lavaland max heat for ash lizards.
-	bodytemp_cold_damage_limit = (BODYTEMP_COLD_DAMAGE_LIMIT - 10)
-	loreblurb = "Cold-blooded and covered in scales, lizards may seem like a vicious predator put in a fancy jumpsuit, \
-	but due to some recent pressure from HR they're generally well-behaved. Most of them don't even fight all that well. \
-	Confusing them with Ash Walkers (the similarly lizard-like natives of the Lavaland Wastes) might lead to having a spear lodged in your skull."
+	species_language_holder = /datum/language_holder/lizard/kobold
+	loreblurb = "Albeit small, these tiny lizardpeople make up for their lack of height with their sleight of hand, \
+	cuteness, and strength in numbers. Appearing primarily in the Lavaland Wastes, they tend to flock towards the locals \
+	and Megafauna nearby. Occasionally, they can be found as stowaways on the station, mainly in maintenance tunnels. \
+	Their eyes work best in dark environments, having natural night vision."
 
 /*
  Lizard subspecies: ASHWALKERS

@@ -553,6 +553,10 @@ ARRIVALS_SHUTTLE_DOCK_WINDOW 55
 ## Uncomment to prevent late join players from spawning if the arrivals shuttle is depressurized
 #ARRIVALS_SHUTTLE_REQUIRE_SAFE_LATEJOIN
 
+## How many overrated short lizards you want to spawn in maint at the start of the round.
+
+KOBOLDS_ROUNDSTART 5
+
 ## How many wirechewing rodents you want to spawn on exposed maintenane wires at the start of the round. You may wish to set this to 0 if you're testing powernets.
 
 MICE_ROUNDSTART 10

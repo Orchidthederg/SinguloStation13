@@ -92,3 +92,8 @@
 	name = "wumborian fugu den"
 	desc = "A den housing a nest of wumborian fugus, how do they all even fit in there?"
 	mob_types = list(/mob/living/simple_animal/hostile/asteroid/fugu)
+
+/obj/structure/spawner/mining/kobold
+	name = "kobold den"
+	desc = "A den housing a nest of Kobolds, various coins and gems inside."
+	mob_types = list(/mob/living/carbon/human/species/lizard/kobold)

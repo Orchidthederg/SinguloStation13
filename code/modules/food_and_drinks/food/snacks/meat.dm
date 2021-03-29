@@ -89,6 +89,13 @@
 	tastes = list("meat" = 4, "scales" = 1)
 	foodtype = MEAT | RAW
 
+/obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/lizard/kobold
+	icon_state = "lizardmeat"
+	desc = "You'd have to be a monster to eat this."
+	filling_color = "#4b0f0f"
+	tastes = list("treasure" = 5, "scales" = 2, "ash" = 1, "coins" = 2)
+	foodtype = MEAT | RAW
+
 /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/plant
 	icon_state = "plantmeat"
 	desc = "All the joys of healthy eating with all the fun of cannibalism."

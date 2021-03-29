@@ -1,4 +1,7 @@
 /mob/living/carbon/human/say_mod(input, list/message_mods = list())
+	if(is_species(src, /datum/species/lizard/kobold))
+		. = pick("yaps","yips","hisses")
+		return .
 	verb_say = dna.species.say_mod
 	if(slurring)
 		return "slurs"

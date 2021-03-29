@@ -60,7 +60,7 @@
 	name = "small forked tongue"
 	desc = "A forked tongue that seems fairly small, likely from a Kobold."
 	icon_state = "tonguelizard"
-	say_mod = pick("yips", "yaps", "hisses")
+	say_mod = null
 	taste_sensitivity = 8 // hungry
 	modifies_speech = FALSE
 

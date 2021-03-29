@@ -267,6 +267,18 @@
 					else
 						manual_emote(pick(emote_hear))
 
+/mob/living/carbon/human/species/lizard/kobold/proc/environment_air_is_safe()
+	. = TRUE
+
+	if(isturf(loc) && isopenturf(loc))
+		var/turf/open/ST = loc
+		if(ST.air)
+			var/o2 = ST.air.get_moles(/datum/gas/oxygen)
+			if(o2 <= 19) //pain
+				. = FALSE
+				return
+
+
 /mob/living/simple_animal/proc/environment_air_is_safe()
 	. = TRUE
 

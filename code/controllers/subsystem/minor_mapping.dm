@@ -4,6 +4,7 @@ SUBSYSTEM_DEF(minor_mapping)
 	flags = SS_NO_FIRE
 
 /datum/controller/subsystem/minor_mapping/Initialize(timeofday)
+	trigger_stowaway(CONFIG_GET(number/kobolds_roundstart))
 	trigger_migration(CONFIG_GET(number/mice_roundstart))
 	place_satchels()
 	return ..()
@@ -23,6 +24,23 @@ SUBSYSTEM_DEF(minor_mapping)
 		if(M.environment_air_is_safe())
 			num_mice -= 1
 			M = null
+
+/datum/controller/subsystem/minor_mapping/proc/trigger_stowaway(num_kobolds=5)
+	var/list/exposed_wires = find_exposed_wires()
+
+	var/mob/living/carbon/human/species/lizard/kobold/K
+
+	var/turf/proposed_turf
+
+	while((num_kobolds > 0) && exposed_wires.len)
+		proposed_turf = pick_n_take(exposed_wires)
+		if(!K)
+			K = new(proposed_turf)
+		else
+			K.forceMove(proposed_turf)
+		if(K.environment_air_is_safe())
+			num_kobolds -= 1
+			K = null
 
 /datum/controller/subsystem/minor_mapping/proc/place_satchels(amount=10)
 	var/list/turfs = find_satchel_suitable_turfs()

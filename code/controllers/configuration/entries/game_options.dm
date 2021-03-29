@@ -363,6 +363,10 @@
 	min_val = 0
 	integer = FALSE
 
+/datum/config_entry/number/kobolds_roundstart
+	config_entry_value = 5
+	min_val = 1
+
 /datum/config_entry/number/mice_roundstart
 	config_entry_value = 10
 	min_val = 0

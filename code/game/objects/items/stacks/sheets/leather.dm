@@ -87,6 +87,13 @@ GLOBAL_LIST_INIT(monkey_recipes, list ( \
 	icon_state = "sheet-lizard"
 	item_state = "sheet-lizard"
 
+/obj/item/stack/sheet/animalhide/lizard/kobold
+	name = "Kobold hide"
+	desc = "Rumors say that you can line clothing with this to make it lavaproof. The people who rumored it didn't last long."
+	singular_name = "Kobold scales"
+	icon_state = "sheet-kobold"
+	item_state = "sheet-kobold"
+
 /obj/item/stack/sheet/animalhide/xeno
 	name = "alien hide"
 	desc = "The skin of a terrible creature."
